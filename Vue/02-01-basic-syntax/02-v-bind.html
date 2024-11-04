@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <img v-bind:src="imageSrc">
+    <a v-bind:href="myUrl">Move to url</a>
+    <img :src="imageSrc">
+    <a :href="myUrl">Move to url</a>
+    <p :[dynamicattr]="dynamicValue">Dynamic Attr</p>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const imageSrc = ref('https://picsum.photos/200')
+        const myUrl = ref('https://www.google.co.kr/')
+        const dynamicattr = ref('title')
+        const dynamicValue = ref('Hello Vue.js')
+        return {
+          imageSrc,
+          myUrl,
+          dynamicattr,
+          dynamicValue
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
+
+
+<!-- 
+  <img src="imageSrc"> 는 그냥 imageSrc 라는 문자열을 가지는 태그이다.
+  주소값을 가지지 못함
+  여기에 v-bind를 붙이면 됨
+   <img v-bind:src="imageSrc">
+
+  v-bind 의 약어는 그냥 지워고 ':'
+
+  - Dynamic attribute name 동적 인자 이름
+    - 대괄호[] 로 감싸서 directive에 argument에 자.스 표현식을 사용할 수 있ㅇ므
+    - 표현식에 따라 동적으로 평가된 값이 최종 argument 값으로 사용됨
+    dynamicattr가 title 로 들어가 동적으로 사용됨을 알 수 있다. 
+    여기서 !!@
+    대괄호 안에 작성하는 이름은 반드시!!! 소문자로만 구성 가능💕
+    (브라우저가 속성 이름을 소문자로 강제 변환하기 때문)
+
+
+
+
+
+
+ -->

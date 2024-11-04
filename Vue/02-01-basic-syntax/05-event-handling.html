@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Inline Handlers -->
+    <button @click="count++">Add 1</button>
+    <p>Count: {{ count }}</p>
+
+    <!-- Method Handlers -->
+    <button @click="increase"">Hello</button>
+    <button @click="myFunc"">Hello</button>
+
+
+    <!-- Calling Methods in Inline Handlers 인자를 받는 메서드-->
+    <button @click="greeting('hello')">Say hello</button>
+    <button @click="greeting('bye')"">Say bye</button>
+
+    <!-- Accessing Event Argument in Inline Handlers -->
+    <button @click="warning('경고입니다', $event)">Submit</button>
+
+    <!-- event modifiers -->
+    <form @submit.prevent="onSubmit">
+      <input type="submit">
+    </form>
+      
+    <!-- <a @click.stop.prevent="onLink">onLink</a>  -->
+
+    <!-- key modifiers -->
+    <input @keyup.enter="onSubmit">
+
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const count = ref(0)
+        const increase = function () {
+          count.value += 1
+        }
+        const greeting = function (message) {
+          console.log(message)
+        }
+        const warning = function (message, event){
+          console.log(message)
+          console.log(event)
+        }
+        const name = ref('Alice')
+        const myFunc = function (event) {
+          console.log(event)
+          console.log(event.currentTarget)
+          console.log(name.value)
+        }
+        const onSubmit = function (){
+          console.log('onSubmit')
+        }
+        const onLink = ref('https://www.google.com/')
+
+
+        return {
+          count,
+          increase,
+          greeting,
+          warning,
+          myFunc,
+          onSubmit,
+          onLink,
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
+
+
+
+<!-- 
+const count = ref(0)
+반응형 변수 작성
+
+어떠한 버튼을 클릭하면 클릭 이벤트가 발생했을 때 카운트가 증가하는 함수를 짜보자 
+그럼 div태그에서 button태그에 <button @click="count++">Add 1</button>
+"" 에는 자바스트크립트 표현식을 적어주자
+그리고 밑에 <p>Count: {{ count }}</p> count값 증가!
+
+근데 요런 인라인 핸들러는 권장하는 방식은 아님
+count++ 로 쓰는것보다는 메서드를 만들어서 메서드로 호출하는게 좋다.
+
+greeting 이라는 함수를 만들고 인자로 message를 받는다.
+인자로 받은 message를 출력하는 함수이다. (greeting)
+const greeting = function (message) {
+          console.log(message)
+        }
+그리고 greeting 함수 호출하려 하는데 ~~~ 
+
+잠시 increase라는 함수 하나 더 만들자 
+ const increase = function () {
+          count.value += 1
+        }
+얘는 count 값을 1씩 증가시키는 합수 근데 여기서 .value 잊지 말자 
+
+ <Inline Handlers> 
+<button @click="count++">Add 1</button>
+<p>Count: {{ count }}</p>
+
+
+  <Method Handlers>
+ <button @click="increase"">Hello</button>
+
+위의 두개는 같다. 하지만 메서드핸들러를 권장한다. 
+
+메서드를 활용할 때 기본 인자를 활용할 수 있다. 
+<button @click="greeting('hello')">Say hello</button>
+<button @click="greeting('bye')"">Say bye</button>
+
+---
+
+인라인 핸들러에서 이벤트를 전달받을 수 있다. 
+넘어오는 이벤트 객체를 선택적으로 활용할 수 있다.
+
+명시를 해서 넘겨주면 된다.
+다시 함수하나 만들기 warning
+
+const warning = function (message, event){
+          console.log(message)
+          console.log(event)
+        }
+
+그 다음 button 에 warning을 달아준다. 
+warning은 인자 두개를 받아오는데 
+이 때 event를 받아오는 방법은 $event 라고 적어준다.
+$event는 내장되어 있는 event 객체를 뜻함 
+$접두어는 이 영역에서 쓸 수 있는 글로벌 변수들이 존재하는데 
+글로벌 변수는 앞에 $를 붙임. 일반적인 변수와 구분하기 위해 
+위치는 상관없음
+
+------------
+.prevent ㄱ
+
+ -->
+

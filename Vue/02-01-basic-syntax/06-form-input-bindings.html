@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p>{{ inputText1 }}</p>
+    <input :value="inputText1" @input="onInput">
+
+    <p>{{  inputText2 }}</p>
+    <input v-model="inputText2">
+
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const inputText1 = ref('')
+        const onInput = function (event) {
+          inputText1.value = event.currentTarget.value
+        }
+        const inputText2 = ref('')
+        return {
+          inputText1,
+          onInput,
+          inputText2,
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
+
+
+<!-- 
+  form input 에 연결해보자 
+  우리가 데이터를 전송할 때는 form 태그를 쓴다. 
+  백엔드로 요청을 보낼 때!
+  form 에 입력값들이 실제로 어떤 값인지 바인딩을 해야한다. 
+  그래야 그 값을 담아서 요청을 엑시오시나 다른 라이브러리를 통해 보낼 수 잇는데 ,
+  그럴려면 결국 이 form 에 어떤 값이 입력 되고 있는지 
+  이 input값을 추척할 수 있어야 한다. 그것도 동적으로 추척할 수 있어야 한다.
+  실시간으로 사용자들이 뭘 입력하는지 알아야 한다. 
+  그값을 계속해서 백엔드로 보낼 수 있기 때문에
+
+  그래서 form 을 처리할 때 사용자가 input에 입력하는 값을 실시간으로 자,스 상태에 
+  동기화해야하는 경우(양방향 바인딩 )
+
+  이 양방향 바인딩을 하는 방법은 두가지가 있다.
+  1. v-bind와 v-on 을 함께 사용
+  2. v-model사용
+
+ -->
+
+
+ <!-- 
+  1. v-bind와 v-on 을 함께 사용
+
+  v-bind 를 통해 input에 연결하는 값을 <p>{{ }}</p> 에 실시간으로 출력할 거야 
+  실시간을 출력한 값은 script 태그에 반응형 변수가 존재할 것이다.
+
+  우선 
+  const inputText1 = ref('') 라는 긴 문자열을 출력하는 변수만들자 
+
+  그리고 const onInput = function (event) = {
+          inputText1.value = event.currentTarget.value
+        } 이라는 메서드를 하나 만들 껀데 얘는 input 이벤트가 발생할 때 마다 
+        저기다가 값을 값을 할당을 하는 메서드이다. 
+
+        onInput 매서드가 호출될 때 마다 이벤트를 호출한 currentTarget에 value값을
+        계속 호출할 꺼임 
+
+
+        <input :value="inputText1" @input="onInput">
+
+      input 의 속성값은 inputText1 이 될 거고,
+      input 이벤트가 발생할 때마다 onInput 메서드를 호출할 거다. 
+
+-->
+
+<!-- 
+  우리는 v-bind 와 v-on 을 통해 양방향 바인딩을 진행했다.
+  그래서 변수값이 계속 채워지고 있다. 
+  이 변수값이 채워졌기 때문에 백엔드에서 쓸수있다ㅣ. 
+
+
+  이거랑 똑같은 일을 하는 것이 v-model 이다.
+  v-model 은 form input 요소 또는 컴포넌트에서 양방향 바인딩을 만든다. 
+   
+  그래서 한방에 끝남
+  const inputText2 = ref('')
+ 똑같이 빈문자열 준비해주고 
+
+ 두번째 p 태그에 입력해주고 
+ <p>{{  inputText2 }}</p>
+ <input v-model="inputText2">
+
+ 훨씬 더 간결해졌다. 
+
+ 조금 다른점이 있다. 
+
+ v-model 은 한박자 느리게 구현됨
+ v-model 는 영어를 기준으로 구현되게 되어 있어서 한글로 입력했을 때 한박자 느림
+ 
+ 
+ -->

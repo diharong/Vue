@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <button v-on:click="increment">
+      {{ number }}
+    </button>
+    <!-- <p>{{ number }}</p>
+    <p>{{ number }}</p>
+    <p>{{ number }}</p>
+    <p>{{ number }}</p>
+    <p>{{ number }}</p> -->
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const number = ref(0)
+        const increment = function(){
+          number.value++
+        }
+        
+        }
+        return {
+          number,
+          increment,
+        }
+      
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
+
+
+<!-- 
+  기본세팅 후 함수하나 만들어보자
+  const increment = function(){
+
+        }
+  
+  이 함수를 호출하면 어떤 숫자를 증가시킬꺼야
+  위에 const number = rdf(0) 작성
+  이 함수를 호출하면 number를 증가시킬꺼야
+  const increment = function(){
+          number++
+        }
+        
+        }  
+
+  return 에 number, increment 을 넣어주고 
+  div의 button 태그에 {{ number }} 넣어준뒤
+  <button v-on:click="increment"> 를 통해 버튼을 클릭하면
+    increment 함수를 호출하겠다.는 코드 작성
+
+    근데@!@@ 출력해보면 반응안함!!!!!!!
+    왜~?!~?!?~!?~?!~?!~?!?~?!?!? 
+
+    console.log(number) 로 number 출력해보면
+    객 체 가 나옴 즉, ref 객체 ++ 로 접근하고 있었던 것 ! 
+    그렇다면 어떻게 접근해야 할 까 ? number.value++ 해야함 
+
+    그럼 이제는 1씩 증가한다.!!
+
+    여기서 v-on 의 정체는 이벤트 리스너 이다. 
+
+
+
+
+
+ -->

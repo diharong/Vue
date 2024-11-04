@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>{{ message }}</h1>
+    <button v-on:click="countNumber++">
+      카운트 넘버: {{ countNumber }}
+    </button>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+    
+
+    const app = createApp({
+      setup(){
+        const message = ref('Hello')
+        const countNumber = ref(0)
+        return {
+          message,
+          countNumber
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
+
+
+<!-- Vue 라는 객체를 사용할 수 있다. 구조분해할당을 통해 함수하나를 'const { createApp } = Vue' createApp라는 할당받은거임
+ 
+왜냐하면 하나의 어플리케이션을 만들꺼다 . 어떤것을 통해 만들 수 있을까?
+createApp() 함수를 통해서 하나의 어플리케이션을 만들면서 시작
+createApp({}) 함수는 객체하나를 인자로 받는다.
+=> setup() 함수를 객체로 받는다.!
+setup 메서드는 return {} 라는 객체를 리턴한다.
+이것들은 다 약속임!! 
+
+ref 라는 함수를 구조분해할당을 통해 할당받는다.
+const message = ref('Hello') 변수에 문자열 값을 ref함수의 인자로 넣는다. 
+그리고 이 message 를 리턴 값으로 넣어주면 된다. 
+
+그 다음 이 app을 div 를 통해 출력하고 싶다.
+그러기 위해서는 div 에 연결해야함 어떻게 ??
+=> 연결하는 작업을 마운팅 한다 라고 함 mount라는 메서드를 통해 진행한다.
+app.mount('#app') #app 은 div의 id 속성값이다.  
+
+그럼 div와 연결 완료! 
+이제 div에서 message를 출력해보자
+h1 태그를 통해 <h1>{{message}}</h1> 이렇게 하고 나서 출력하면 나옴!
+-->
+
+
+<!-- 
+  질문 : return은 왜 객체를 반환해야할까 ? 
+  객체를 반환하지 않으면 이론적으로 할수있는 것들이 없다.
+  앞으로 많은 데이터들을 받을 텐데 객체가 아니면 여러값들을 받아올수없기 때문이다.
+
+ -->
+
+
+<!-- 
+  자 이제는 값하나를 어떠한 이벤트로 인해 1씩 증가시켜본다. 
+  우선 어떤 버튼하나를 만들껀데 (div 태그 안에서) 
+    <button>
+      카운트 넘버: {{ countNumber }}
+    </button>
+  일 때 countNumber 가 계속 증가되는 것을 해보자 
+    이제 0 값이 필요하다. 따라서
+   setup함수 에서 eonst countNumber를 추가하고  
+    바로 0이라고 하지말고 ref 함수로 감싸주자
+    const countNumber = ref(0)
+    그리고 return 에 countNumber 변수 추가 해주기!! return 에 적지않으면
+    출력 안됨
+    그런데 이걸 출력 후 버튼을 눌러보면 1씩 증가하지 않고 그대로 있음
+    
+    이걸 구현하기 위해서는!!
+
+    button 에 속성값으로 <button v-on:click="countNumber++"> 라고 작성해보자
+    그 다음 출력해보면 숫자가 1씩 증가하는 것을 알수있다.
+     
+    이 한줄로 조작 끝! 이게 프레임워크의 힘!
+
+  -->
+
+
+<!-- Component 의 부모자식 관계 , 트리 형태로 구성됨 -->
+
